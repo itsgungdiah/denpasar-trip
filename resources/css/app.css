@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Intel+One+Mono:wght@400;500;700&display=swap');
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@theme {
+    /* Fonts */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Playfair Display", Georgia, serif;
+    --font-mono: "Intel One Mono", monospace;
+
+    /* Main colors */
+    --color-brand-black: #101F2D;
+    --color-brand-orange: #B96142;
+    --color-brand-gray: #5D6063;
+    --color-brand-green: #123B35;
+    --color-brand-cream: #F9F6F0;
+    --color-brand-admin-cream: #F7F3EC;
+
+    /* Category colors */
+    --color-nature-bg: #DCEBDD;
+    --color-nature-text: #187E1F;
+
+    --color-culture-bg: #F2E3C7;
+    --color-culture-text: #875800;
+
+    --color-art-bg: #E9DDF4;
+    --color-art-text: #894AC3;
+
+    --color-culinary-bg: #F8DFD2;
+    --color-culinary-text: #D85E1F;
+
+    --color-shopping-bg: #DCEAF5;
+    --color-shopping-text: #134D7A;
+}
