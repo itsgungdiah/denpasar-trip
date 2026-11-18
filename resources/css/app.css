@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Intel+One+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -35,4 +35,44 @@
 
     --color-shopping-bg: #DCEAF5;
     --color-shopping-text: #134D7A;
+
+}
+
+@keyframes home-hero-entrance {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes home-hero-background {
+    from { transform: scale(1.045); }
+    to { transform: scale(1.015); }
+}
+
+/* Smooth same-origin page navigation where the browser supports View Transitions. */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: page-navigation-out 140ms ease-out both;
+}
+
+::view-transition-new(root) {
+    animation: page-navigation-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes page-navigation-out {
+    to { opacity: 0; }
+}
+
+@keyframes page-navigation-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 1ms !important;
+    }
 }

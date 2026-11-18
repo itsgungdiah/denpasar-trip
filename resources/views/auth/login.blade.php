@@ -3,91 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Login | DenpasarTrip</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-        }
-    </style>
 </head>
-<body class="h-screen w-screen overflow-hidden font-sans">
-    <main class="relative h-screen w-screen overflow-hidden bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('images/login.png') }}');">
-        <div class="grid h-full w-full grid-cols-1 items-start gap-6 overflow-hidden px-5 py-6 sm:px-10 lg:grid-cols-2 lg:gap-10 lg:px-16 lg:py-10">
-            <section class="hidden pt-8 text-white lg:block">
-                <h1 class="text-5xl font-black leading-tight xl:text-6xl">
+<body class="min-h-dvh w-full bg-[#14211F] font-sans motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+    <main class="relative isolate min-h-dvh w-full overflow-hidden bg-[#14211F] motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+        <img src="{{ asset('images/login.png') }}" alt="" aria-hidden="true" class="absolute inset-0 z-0 h-full w-full object-cover object-center motion-reduce:transition-none">
+        <div class="absolute inset-0 z-[1] bg-gradient-to-r from-[#10252b]/45 via-[#10252b]/10 to-[#10252b]/20 dark:from-[#081713]/55 dark:via-[#081713]/25 dark:to-[#081713]/40" aria-hidden="true"></div>
+        <a href="{{ route('login') }}" class="relative z-10 ml-4 flex w-fit items-center gap-2.5 pt-4 text-[#152535] dark:text-[#F5F2EB] drop-shadow-sm sm:ml-8 sm:pt-5 xl:absolute xl:left-8 xl:top-5 xl:ml-0 xl:pt-0 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!" aria-label="DenpasarTrip — halaman masuk">
+                <img src="{{ asset('images/logo.png') }}" alt="" class="h-9 w-9 object-contain motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                <span class="text-[#ffffff] text-xl font-extrabold tracking-tight motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Denpasar<span class="text-[#C76D4C] motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Trip</span></span>
+        </a>
+        <div class="relative z-10 mx-auto flex min-h-dvh w-full max-w-[1520px] flex-col px-4 pb-5 sm:px-8 xl:px-12 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+            <div class="grid flex-1 grid-cols-1 items-center gap-6 py-5 sm:py-6 xl:grid-cols-[minmax(0,1fr)_28rem] xl:gap-10 xl:py-6 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+            <section class="hidden max-w-2xl text-white xl:block motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                <h1 class="font-display text-5xl font-bold leading-tight drop-shadow-sm xl:text-6xl motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
                     Jelajahi Keindahan
-                    <span class="block text-[#C76D4C]">Denpasar</span>
+                    <span class="block text-[#C76D4C] motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Denpasar</span>
                 </h1>
-                <p class="mt-5 max-w-lg text-base font-medium leading-relaxed xl:text-lg">
+                <p class="mt-4 max-w-lg text-base font-medium leading-relaxed text-white/95 drop-shadow-sm xl:text-lg motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
                     Temukan tempat terbaik, susun rencana perjalananmu, dan ciptakan pengalaman berwisata yang tak terlupakan di Denpasar, Bali.
                 </p>
             </section>
-            <section class="mx-auto w-full max-w-md rounded-2xl bg-white px-7 py-7 shadow-xl sm:px-10 sm:py-8">
-                <div class="mb-6 flex items-center gap-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo DenpasarTrip" class="h-12 w-12 object-contain">
-                    <h2 class="text-2xl font-extrabold tracking-tight text-[#152535]">Denpasar<span class="text-[#C76D4C]">Trip</span></h2>
+            <section class="mx-auto w-full max-w-md rounded-[2rem] border border-white/85 bg-[linear-gradient(145deg,rgba(255,255,255,.82),rgba(247,243,236,.66))] px-6 py-6 shadow-[0_28px_80px_rgba(8,28,35,.28),inset_0_1px_0_rgba(255,255,255,.95),inset_0_-1px_0_rgba(255,255,255,.35)] backdrop-blur-2xl dark:border-white/25 dark:bg-[linear-gradient(145deg,rgba(23,39,35,.84),rgba(13,30,26,.72))] sm:px-8 sm:py-7 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                <div class="mb-4 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                    <h1 class="text-3xl font-bold tracking-tight text-[#152535] dark:text-[#F5F2EB] motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Selamat Datang!</h1>
+                    <p class="mt-1.5 text-base leading-relaxed text-slate-700 dark:text-slate-200 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Masuk ke akunmu untuk melanjutkan petualangan di Denpasar.</p>
                 </div>
-                <div class="mb-6">
-                    <h1 class="text-3xl font-bold tracking-tight text-[#152535]">Selamat Datang!</h1>
-                    <p class="mt-2 text-base leading-snug text-gray-500">Masuk ke akunmu untuk melanjutkan petualangan di Denpasar.</p>
-                </div>
-                @if ($errors->any())
-                    <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-                        {{ $errors->first() }}
+                @if (session('success') || session('status'))
+                    <div class="mb-4 rounded-xl border border-emerald-200/80 bg-emerald-50/80 px-4 py-3 text-sm text-emerald-800 shadow-sm dark:border-emerald-300/20 dark:bg-emerald-950/40 dark:text-emerald-200" role="status">
+                        {{ session('success') ?? session('status') }}
                     </div>
                 @endif
-                <form action="{{ route('login.submit') }}" method="POST">
+                @if ($errors->has('oauth'))
+                    <div class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                        {{ $errors->first('oauth') }}
+                    </div>
+                @endif
+                <form action="{{ route('login.submit') }}" method="POST" novalidate data-auth-form="login">
                     @csrf
-                    <div class="mb-4">
-                        <label for="email" class="mb-2 block text-sm font-semibold text-gray-600">Email</label>
-                        <div class="flex items-center gap-3 rounded-xl border border-gray-400 px-4 focus-within:border-[#123F38] focus-within:ring-1 focus-within:ring-[#123F38]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-gray-500">
+                    <div class="mb-3 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                        <label for="email" class="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-200 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Email</label>
+                        <div class="auth-input-shell flex items-center gap-3 rounded-xl border {{ $errors->has('email') ? 'border-2 !border-red-500' : 'border-white/90 dark:border-white/20' }} bg-white/35 dark:bg-[#1D2B28]/75 px-3.5 shadow-sm backdrop-blur-md focus-within:border-[#123F38] dark:focus-within:border-[#9AC7B8] focus-within:ring-2 focus-within:ring-[#123F38]/20 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-gray-500 dark:text-gray-400 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
                                 <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                                 <path d="m3 7 9 6 9-6"></path>
                             </svg>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan alamat email" autocomplete="username" required autofocus class="min-w-0 flex-1 border-0 bg-transparent py-3.5 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:ring-0">
+                            <input type="email" id="email" name="email" data-auth-field="email" aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}" aria-describedby="email-error" value="{{ old('email') }}" placeholder="Masukkan alamat email" autocomplete="username" required autofocus class="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-sm text-gray-800 dark:text-gray-100 outline-none placeholder:text-gray-400 focus:ring-0 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
                         </div>
+                        <p id="email-error" data-field-error="email" class="mt-1.5 text-xs text-red-600 {{ $errors->has('email') ? '' : 'hidden' }} motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">{{ $errors->first('email') }}</p>
                     </div>
-                    <div class="mb-2">
-                        <label for="password" class="mb-2 block text-sm font-semibold text-gray-600">Password</label>
-                        <div class="flex items-center gap-3 rounded-xl border border-gray-400 px-4 focus-within:border-[#123F38] focus-within:ring-1 focus-within:ring-[#123F38]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-gray-500">
+                    <div class="mb-1 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                        <label for="password" class="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-200 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">Password</label>
+                        <div class="auth-input-shell flex items-center gap-3 rounded-xl border {{ $errors->has('password') ? 'border-2 !border-red-500' : 'border-white/90 dark:border-white/20' }} bg-white/35 dark:bg-[#1D2B28]/75 px-3.5 shadow-sm backdrop-blur-md focus-within:border-[#123F38] dark:focus-within:border-[#9AC7B8] focus-within:ring-2 focus-within:ring-[#123F38]/20 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-gray-500 dark:text-gray-400 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
                                 <rect x="4" y="10" width="16" height="11" rx="2"></rect>
                                 <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
                                 <path d="M12 14v3"></path>
                             </svg>
-                            <input type="password" id="password" name="password" placeholder="Masukkan password" autocomplete="current-password" required class="min-w-0 flex-1 border-0 bg-transparent py-3.5 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:ring-0">
-                            <button type="button" id="toggle-password" aria-label="Tampilkan password" aria-pressed="false" class="flex shrink-0 items-center justify-center p-1 text-gray-500 hover:text-[#123F38]">
+                            <input type="password" id="password" name="password" data-auth-field="password" aria-invalid="{{ $errors->has('password') ? 'true' : 'false' }}" aria-describedby="password-error" placeholder="Masukkan password" autocomplete="current-password" required class="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-sm text-gray-800 dark:text-gray-100 outline-none placeholder:text-gray-400 focus:ring-0 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                            <button type="button" id="toggle-password" aria-label="Tampilkan password" aria-pressed="false" class="flex shrink-0 items-center justify-center p-1 text-gray-500 dark:text-gray-400 hover:text-[#123F38] dark:text-[#9AC7B8] motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
                                 <svg id="password-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
                             </button>
                         </div>
+                        <p id="password-error" data-field-error="password" class="mt-1.5 text-xs text-red-600 {{ $errors->has('password') ? '' : 'hidden' }} motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">{{ $errors->first('password') }}</p>
                     </div>
-                    <div class="mb-4 flex justify-end">
-                        <button type="button" disabled title="Fitur belum tersedia" class="text-xs font-semibold text-[#123F38]">Lupa password?</button>
+                    <div class="mb-3 flex justify-end motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                        <a href="{{ route('password.request') }}" class="rounded-md text-xs font-semibold text-[#123F38] underline-offset-4 transition hover:text-[#C76D4C] hover:underline focus:outline-none focus:ring-2 focus:ring-[#123F38]/40 dark:text-[#9AC7B8] dark:hover:text-[#F0A080]">Lupa password?</a>
                     </div>
-                    <button type="submit" class="flex w-full items-center justify-center gap-3 rounded-xl bg-[#123F38] px-5 py-3.5 font-semibold text-white transition hover:bg-[#0D302B] focus:outline-none focus:ring-2 focus:ring-[#123F38] focus:ring-offset-2">
-                        Masuk
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"></path>
-                            <path d="m12 5 7 7-7 7"></path>
-                        </svg>
+                    <button type="submit" class="flex w-full items-center justify-center gap-3 rounded-xl border border-white/35 bg-[linear-gradient(135deg,rgba(18,63,56,.96),rgba(13,48,43,.88))] px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(18,63,56,.24),inset_0_1px_0_rgba(255,255,255,.24)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(18,63,56,.32),inset_0_1px_0_rgba(255,255,255,.36)] active:translate-y-0 active:scale-[.99] focus:outline-none focus:ring-2 focus:ring-[#123F38] focus:ring-offset-2 motion-reduce:transition-none">
+                        <span data-submit-label>Masuk</span>
+                        <span data-loading-spinner class="hidden h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!" aria-hidden="true"></span>
                     </button>
                 </form>
-                <div class="my-5 flex items-center gap-3">
-                    <div class="h-px flex-1 bg-gray-300"></div>
-                    <span class="whitespace-nowrap text-xs text-gray-500">atau masuk dengan</span>
-                    <div class="h-px flex-1 bg-gray-300"></div>
+                <div class="my-4 flex items-center gap-3 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                    <div class="h-px flex-1 bg-white/90 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!"></div>
+                    <span class="whitespace-nowrap text-xs text-slate-700 dark:text-slate-200 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">atau masuk dengan</span>
+                    <div class="h-px flex-1 bg-white/90 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!"></div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" disabled title="Login Google belum tersedia" class="flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-gray-300 px-3 py-3 text-sm font-semibold text-gray-500 opacity-70">
+                <div class="grid grid-cols-1 gap-3 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                    <a href="{{ route('oauth.redirect', ['provider' => 'google']) }}" class="flex items-center justify-center gap-2 rounded-xl border border-white/90 bg-white/55 px-3 py-3 text-sm font-semibold text-[#152535] shadow-[0_8px_20px_rgba(20,34,48,.08),inset_0_1px_0_rgba(255,255,255,.9)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/75 hover:shadow-[0_12px_24px_rgba(20,34,48,.12),inset_0_1px_0_white] active:translate-y-0 active:scale-[.99] focus:outline-none focus:ring-2 focus:ring-[#123F38] dark:border-white/25 dark:bg-white/10 dark:text-[#F5F2EB] dark:hover:bg-white/15 motion-reduce:transition-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
                             <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z" transform="translate(0 4)"></path>
                             <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.73 7.18l7.66 5.94c4.47-4.13 7.11-10.2 7.11-17.59Z"></path>
@@ -95,16 +94,16 @@
                             <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.81l-7.66-5.94c-2.13 1.43-4.86 2.27-8.24 2.27-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z" transform="translate(0 -4)"></path>
                         </svg>
                         Google
-                    </button>
-                    <button type="button" disabled title="Login Apple belum tersedia" class="flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-gray-300 px-3 py-3 text-sm font-semibold text-gray-500 opacity-70">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.37 12.48c.02 2.12 1.86 2.83 1.88 2.84-.02.05-.29 1.01-.96 2-.58.86-1.18 1.72-2.12 1.74-.92.02-1.22-.56-2.28-.56-1.05 0-1.39.54-2.26.58-.91.03-1.6-.93-2.18-1.79-1.19-1.72-2.1-4.87-.88-7 .6-1.06 1.67-1.73 2.82-1.75.88-.02 1.71.61 2.26.61.54 0 1.55-.75 2.62-.64.45.02 1.71.18 2.52 1.37-.07.04-1.51.88-1.5 2.6ZM14.67 5.87c.48-.58.8-1.38.71-2.18-.69.03-1.53.46-2.03 1.04-.45.52-.84 1.33-.73 2.11.77.06 1.57-.39 2.05-.97Z"></path>
-                        </svg>
-                        Apple
-                    </button>
+                    </a>
                 </div>
-                <p class="mt-5 text-center text-xs text-gray-500">Akun Admin DenpasarTrip</p>
+                <p class="mt-3 text-center text-xs text-gray-500 dark:text-gray-400 motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                    Belum punya akun?
+                    <a href="{{ route('register') }}" class="font-bold text-[#123F38] dark:text-[#9AC7B8] hover:underline motion-reduce:[scroll-behavior:auto]! motion-reduce:[animation-duration:.01ms]! motion-reduce:[animation-iteration-count:1]! motion-reduce:[transition-duration:.01ms]!">
+                        Daftar sekarang
+                    </a>
+                </p>
             </section>
+            </div>
         </div>
     </main>
     <script>

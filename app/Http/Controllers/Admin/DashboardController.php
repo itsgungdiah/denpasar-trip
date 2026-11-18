@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         $totalDestinations = Destination::count();
-        $totalCategories = Category::count();
+        $totalCategories = Category::whereIn('name', Category::DESTINATION_NAMES)->count();
 
         $latestDestinations = Destination::with('categories')
             ->latest()
@@ -19,6 +19,7 @@ class DashboardController extends Controller
             ->get();
 
         $categoryStats = Category::withCount('destinations')
+            ->whereIn('name', Category::DESTINATION_NAMES)
             ->orderBy('name')
             ->get();
 

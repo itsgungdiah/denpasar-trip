@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Destination;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DestinationController extends Controller
 {
@@ -15,7 +19,9 @@ class DestinationController extends Controller
     public function index()
     {
         $query = Destination::with('categories');
-        $categories = \App\Models\Category::orderBy('name')->get();
+        $categories = Category::whereIn('name', Category::DESTINATION_NAMES)
+            ->orderBy('name')
+            ->get();
 
         if (request()->filled('search')) {
             $search = request('search');
@@ -27,7 +33,9 @@ class DestinationController extends Controller
             $categoryId = request('category');
 
             $query->whereHas('categories', function ($categoryQuery) use ($categoryId) {
-                $categoryQuery->where('categories.id', $categoryId);
+                $categoryQuery
+                    ->whereIn('categories.name', Category::DESTINATION_NAMES)
+                    ->where('categories.id', $categoryId);
             });
         }
 
@@ -41,7 +49,9 @@ class DestinationController extends Controller
      */
     public function create()
     {
-        $categories = \App\Models\Category::all();
+        $categories = Category::whereIn('name', Category::DESTINATION_NAMES)
+            ->orderBy('name')
+            ->get();
         return view('admin.destinations.create', compact('categories'));
     }
 
@@ -50,24 +60,8 @@ class DestinationController extends Controller
      */
     public function store(Request $request)
     {
-        /* laravel memeriksa data yang dikirim sebelum disimpan. */
-        /* variabel $request digunakan untuk menerima informasi yang dikirim user (jadi dia menyediakan data yg dikirim pengguna).*/
-        /* method validate() : dari laravel untuk memeriksa apakah data memenuhi aturan. */
-        /* mime : multipurpose internet mail extensions, untuk mengidentifikasi jenis berkas. */
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'opening_hours' => 'nullable|json',
-            'entrance_fee' => 'nullable|json',
-            'average_spending' => 'nullable|json',
-            'google_maps_url' => 'required|url|max:255',
-            'categories' => 'required|array|min:1',
-            'categories.*' => 'required|integer|distinct|exists:categories,id',
-        ]);
+        $validated = $this->validateDestination($request);
 
-        /* menyimpan file gambar ke  disk public di folder destinations (berada di folder projek)*/
-        /* method hasFile() tersedia pada objek Request */
         if ($request->hasFile('image')){
             $validated['image'] = $request->file('image')->store('destinations', 'public');
         }
@@ -75,15 +69,12 @@ class DestinationController extends Controller
         $categoryIds = $validated['categories'];
         unset($validated['categories']);
 
-        /* menyimpan data yang sudah divalidasi ke dalam tabel */
         $destination = Destination::create($validated);
         $destination->categories()->sync($categoryIds);
 
-        /* kembali ke halaman index dan notifikasi sukses */
         return redirect() 
-        ->route('admin.destinations.index') /* ubah rutenya ke halaman tambah destinasi */
+        ->route('admin.destinations.index')
         ->with('success', 'Destinasi berhasil ditambahkan.');
-                            
     }
 
     /**
@@ -100,11 +91,13 @@ class DestinationController extends Controller
     public function edit(string $id)
     {
         $destination = Destination::with('categories')->findOrFail($id); /* mencari destinasi berdasarkan id di database */
-        $categories = \App\Models\Category::all();
+        $categories = Category::whereIn('name', Category::DESTINATION_NAMES)
+            ->orderBy('name')
+            ->get();
 
-        $openingHours = json_decode($destination->opening_hours, true) ?? [];
-        $entranceFee = json_decode($destination->entrance_fee, true) ?? [];
-        $averageSpending = json_decode($destination->average_spending, true) ?? [];
+        $openingHours = $this->decodeStoredJson($destination->opening_hours);
+        $entranceFee = $this->decodeStoredJson($destination->entrance_fee);
+        $averageSpending = $this->decodeStoredJson($destination->average_spending);
         return view('admin.destinations.edit', compact('destination', 'categories', 'openingHours', 'entranceFee','averageSpending'));
     }
 
@@ -115,30 +108,22 @@ class DestinationController extends Controller
     {
         $destination = Destination::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'opening_hours' => 'nullable|string',
-            'entrance_fee' => 'nullable|json',
-            'average_spending' => 'nullable|json',
-            'google_maps_url' => 'required|url|max:255',
-            'categories' => 'required|array|min:1',
-            'categories.*' => 'required|integer|distinct|exists:categories,id',
-        ]);
+        $validated = $this->validateDestination($request);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $newImagePath = $request->file('image')->store('destinations', 'public');
             $oldImagePath = $destination->image;
             $validated['image'] = $newImagePath;
-            $destination->update($validated);
-            $destination->categories()->sync($request->input('categories'));
-            if($oldImagePath){
-                Storage::disk('public')->delete($oldImagePath);
-            }
-        } else {
-            $destination->update($validated);
-            $destination->categories()->sync($request->input('categories'));
+        }
+
+        $categoryIds = $validated['categories'];
+        unset($validated['categories']);
+
+        $destination->update($validated);
+        $destination->categories()->sync($categoryIds);
+
+        if (isset($oldImagePath) && $oldImagePath) {
+            Storage::disk('public')->delete($oldImagePath);
         }
 
         return redirect() 
@@ -159,5 +144,79 @@ class DestinationController extends Controller
         return redirect() 
         ->route('admin.destinations.index') 
         ->with('success', 'Destinasi berhasil dihapus.');
+    }
+
+    private function validateDestination(Request $request): array
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:1000'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'opening_hours' => ['required', 'json'],
+            'entrance_fee' => ['required', 'json'],
+            'average_spending' => ['required', 'json'],
+            'google_maps_url' => ['nullable', 'url', 'max:255'],
+            'categories' => ['required', 'array', 'min:1'],
+            'categories.*' => ['required','integer', 'distinct',
+                Rule::exists('categories', 'id')->where(
+                    fn (Builder $query) => $query->whereIn('name', Category::DESTINATION_NAMES)
+                ),
+            ],
+        ]);
+
+        $openingHours = json_decode($validated['opening_hours'], true, flags: JSON_THROW_ON_ERROR);
+        $entranceFee = json_decode($validated['entrance_fee'], true, flags: JSON_THROW_ON_ERROR);
+        $averageSpending = json_decode($validated['average_spending'], true, flags: JSON_THROW_ON_ERROR);
+
+        Validator::make([
+            'opening_hours' => $openingHours,
+            'entrance_fee' => $entranceFee,
+            'average_spending' => $averageSpending,
+        ], [
+            'opening_hours' => ['required', 'array'],
+            'opening_hours.schedules' => ['required', 'array', 'min:1'],
+            'opening_hours.schedules.*.days' => ['required', 'array', 'min:1'],
+            'opening_hours.schedules.*.days.*' => [
+                'required',
+                'distinct',
+                Rule::in(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']),
+            ],
+            'opening_hours.schedules.*.hours' => ['required', 'string', 'max:100'],
+            'opening_hours.notes' => ['nullable', 'string', 'max:1000'],
+            'entrance_fee' => ['required', 'array'],
+            'entrance_fee.type' => ['required', Rule::in(['free', 'fixed', 'range'])],
+            'entrance_fee.amount' => ['nullable', 'required_if:entrance_fee.type,fixed', 'integer', 'min:0', 'prohibited_unless:entrance_fee.type,fixed'],
+            'entrance_fee.min' => ['nullable', 'required_if:entrance_fee.type,range', 'integer', 'min:0', 'prohibited_unless:entrance_fee.type,range'],
+            'entrance_fee.max' => ['nullable', 'required_if:entrance_fee.type,range', 'integer', 'gte:entrance_fee.min', 'prohibited_unless:entrance_fee.type,range'],
+            'entrance_fee.notes' => ['nullable', 'string', 'max:1000'],
+            'average_spending' => ['required', 'array'],
+            'average_spending.type' => ['nullable', Rule::in(['fixed', 'range'])],
+            'average_spending.amount' => ['nullable', 'required_if:average_spending.type,fixed', 'integer', 'min:0', 'prohibited_unless:average_spending.type,fixed'],
+            'average_spending.min' => ['nullable', 'required_if:average_spending.type,range', 'integer', 'min:0', 'prohibited_unless:average_spending.type,range'],
+            'average_spending.max' => ['nullable', 'required_if:average_spending.type,range', 'integer', 'gte:average_spending.min', 'prohibited_unless:average_spending.type,range'],
+            'average_spending.notes' => ['nullable', 'string', 'max:1000'],
+        ])->validate();
+
+        // Eloquent casts persist these arrays as JSON text in the existing TEXT columns.
+        $validated['opening_hours'] = $openingHours;
+        $validated['entrance_fee'] = $entranceFee;
+        $validated['average_spending'] = $averageSpending;
+
+        return $validated;
+    }
+
+    private function decodeStoredJson(mixed $value): array
+    {
+        for ($attempt = 0; $attempt < 2 && is_string($value); $attempt++) {
+            $decoded = json_decode($value, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return [];
+            }
+
+            $value = $decoded;
+        }
+
+        return is_array($value) ? $value : [];
     }
 }
